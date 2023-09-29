@@ -26,6 +26,7 @@ export const TextToSpeech = () => {
   const handleUserText = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(userText);
+    speak(userText);
   }
 
   return (
