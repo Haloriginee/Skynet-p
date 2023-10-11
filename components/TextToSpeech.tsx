@@ -23,10 +23,28 @@ export const TextToSpeech = () => {
 	};
 
 
-  const handleUserText = (e: FormEvent<HTMLFormElement>) => {
+  const handleUserText = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(userText);
-    speak(userText);
+
+    /* console.log(userText); */
+
+    try {
+
+      const response = await fetch("/api/hello", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({userText})
+      });
+
+      const {message} = await response.json()
+      console.log(message);
+
+    } catch (error) {
+
+     // speak(userText);
+    }
   }
 
   return (
@@ -43,10 +61,12 @@ export const TextToSpeech = () => {
           placeholder='Wingardium Patronum...'
         />
         <button
+          type='submit'
+          disabled={isLoading}
         className=" p-3 ml-3 outline-none bg-black text-slate-400 rounded-full disabled:text-blue-100
         disabled:cursor-not-allowed disabled:bg-gray-500 hover:scale-110 hover:bg-[#F5C047] hover:text-black duration-300 transition-all"
         >
-          Hello there
+          {isLoading ? "Speaking" : "Speak"}
         </button>
       </form>
     </div>
