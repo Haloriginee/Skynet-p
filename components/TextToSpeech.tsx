@@ -30,22 +30,29 @@ export const TextToSpeech = () => {
 
     try {
 
-      const response = await fetch("/api/hello", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({userText})
-      });
 
-      const {message} = await response.json()
-      console.log(message);
+      setIsLoading(true);
+      speak(userText);
+      setIsLoading(false);
+      setUserText("");
 
     } catch (error) {
 
+      console.log(error);
+      setIsLoading(false);
+      }
+      finally {
+        }
+    if (userText === "") {
+      alert("Please enter something to speak");
+      }
+    else {
+      return userText;
+      }
+
      // speak(userText);
     }
-  }
+
 
   return (
     <div>
